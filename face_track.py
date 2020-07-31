@@ -2,9 +2,10 @@ import cv2
 import dlib
 import keyboard
 
+
 detector = dlib.get_frontal_face_detector()
 
-predictor = dlib.shape_predictor("./datasets/shape_predictor_68_face_landmarks.dat")
+predictor = dlib.shape_predictor("./shape_predictor_68_face_landmarks.dat")
 
 cap = cv2.VideoCapture(0)
 
@@ -18,6 +19,11 @@ while True:
     for face in faces:
         landmarks = predictor(gray, face)
         # print(landmarks.parts())
+        # nose = landmarks.parts()[27]
+        # print(nose.x, nose.y)
+        # cv2.circle(gray, (nose.x, nose.y), 2, (255, 0, 0), 2)
+    # print(faces)
+
         lip_up = landmarks.parts()[62].y
         lip_down = landmarks.parts()[66].y
 
@@ -29,13 +35,8 @@ while True:
             keyboard.press("down")
 
 
-        # print(nose.x, nose.y)
-
-
-    # print(faces)
-
     if ret:
-        cv2.imshow("My Screen", frame)
+        cv2.imshow("My Screen", gray)
 
     key = cv2.waitKey(1)
 
